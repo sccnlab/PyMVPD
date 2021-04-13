@@ -1,9 +1,9 @@
 import sys
-from mvpdlite.MVPD_L2_LR import run_L2_LR
-from mvpdlite.MVPD_PCA_LR import run_PCA_LR
-from mvpdlite.MVPD_neural_net import run_neural_net
-from mvpdlite.avgrun_regression import avgruns_reg
-from mvpdlite.avgrun_neural_net import avgruns_nn
+from mvpd.MVPD_L2_LR import run_L2_LR
+from mvpd.MVPD_PCA_LR import run_PCA_LR
+from mvpd.MVPD_neural_net import run_neural_net
+from mvpd.avgrun_regression import avgruns_reg
+from mvpd.avgrun_neural_net import avgruns_nn
 
 def MVPD_exec(model_type, sub, total_run, 
               alpha, num_pc, # reg params
