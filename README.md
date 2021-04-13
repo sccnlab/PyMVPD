@@ -115,7 +115,7 @@ Step 3 - Analysis Execution
 model_exec.MVPD_exec(model_type, sub, total_run, 
                      alpha, num_pc, # reg params
                      input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay, # nn params 
-                     roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction):
+                     roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
 ```
 
 ## Contact
