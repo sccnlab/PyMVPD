@@ -10,9 +10,6 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
 from mvpd.dataloader.loader_neural_net import ROI_Dataset
-from mvpd.func_neural_net.NN_1layer import NN_1layer
-from mvpd.func_neural_net.NN_5layer import NN_5layer
-from mvpd.func_neural_net.NN_5layer_dense import NN_5layer_dense 
 from mvpd.evaluation import var_expl
 from mvpd.viz import viz_map
 
@@ -26,7 +23,7 @@ def save_model(net, optim, epoch, ckpt_fname):
         'optimizer': optim},
         ckpt_fname)
 
-def NN_train(net, trainloader, criterion, optimizer, epoch, print_freq, save_freq, results_save_dir):
+def NN_train(net, model_type, trainloader, criterion, optimizer, epoch, print_freq, save_freq, results_save_dir):
     net.train()
     running_loss = 0.0
     for i, data in enumerate(trainloader):
@@ -82,16 +79,13 @@ def NN_test(net, output_size, testloader, epoch, results_save_dir):
             ROIs_2_numpy = ROIs_2.cpu().data.numpy()
             ROI_2_target = np.concatenate([ROI_2_target, ROIs_2_numpy], 0)
     err_NN = ROI_2_pred - ROI_2_target
-    print("ROI_2_pred:", ROI_2_pred)
-    print("ROI_2_target:", ROI_2_target)
-    print("ROI_2_pred_shape:", np.shape(ROI_2_pred))
     return err_NN, ROI_2_target, ROI_2_pred
 
 def run_neural_net(model_type, sub, total_run,
                    input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay,
                    roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction):
 
-     NN_module = importlib.import_module('func_neural_net.%s'%(model_type))
+     NN_module = importlib.import_module('mvpd.func_neural_net.%s'%(model_type))
      NN_model = getattr(NN_module, model_type)
     
      # Device configuration
@@ -109,11 +103,11 @@ def run_neural_net(model_type, sub, total_run,
          # Load functioanl data and ROI masks 
          # Training 
          roi_train = ROI_Dataset()
-         roi_train.get_train(this_run, total_run)
+         roi_train.get_train(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run)
          trainloader = DataLoader(roi_train, batch_size, shuffle=True, num_workers=0, pin_memory=True) 
          # Testing 
          roi_test = ROI_Dataset()
-         roi_test.get_test(this_run, total_run)
+         roi_test.get_test(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run)
          testloader = DataLoader(roi_test, batch_size, shuffle=False, num_workers=0, pin_memory=True) 
    
          net = NN_model(input_size, hidden_size, output_size).to(device)
@@ -123,7 +117,7 @@ def run_neural_net(model_type, sub, total_run,
          optimizer = optim.SGD(net.parameters(), lr=learning_rate, momentum=momentum_factor, weight_decay=w_decay)
 
          for epoch in range(num_epochs+1):  # loop over the dataset multiple times
-             NN_train(net, trainloader, criterion, optimizer, epoch, print_freq, save_freq, results_save_dir_run)
+             NN_train(net, model_type, trainloader, criterion, optimizer, epoch, print_freq, save_freq, results_save_dir_run)
              if (epoch != 0) & (epoch % save_freq == 0):
                  err_NN, ROI_2_test, ROI_2_pred = NN_test(net, output_size, testloader, epoch, results_save_dir_run)
                  
@@ -132,7 +126,6 @@ def run_neural_net(model_type, sub, total_run,
 
                  # Evaluation: variance explained
                  varexpl = var_expl.eval_var_expl(err_NN, ROI_2_test)
-                 print("max_vari:", max(varexpl))
 
                  # Visualization
                  var_expl_map, var_expl_img = viz_map.cmetric_to_map(filepath_mask2, varexpl)
