@@ -22,10 +22,10 @@ pip install PyMVPD
 ```
 You can also install from the GitHub [repository](https://github.com/sccnlab/PyMVPD) to get the most up-to-date version.
 ```
-git clone https://github.com/sccnlab/PyMVPD_LITE.git
+git clone https://github.com/sccnlab/PyMVPD.git
 pip install -r requirements.txt
 ```
-The following packages need to be installed to use PyMVPD LITE:
+The following packages need to be installed to use PyMVPD:
 * python >= 3.6
 * nibabel>=3.2.1
 * numpy>=1.19.3
@@ -43,7 +43,7 @@ Target ROI: GM - gray matter.
 * Raw data were first preprocessed using [fMRIPrep](https://fmriprep.readthedocs.io/en/latest/index.html) and then denoised by using CompCor (see more details in [Fang et al. 2019](https://doi.org/10.31234/osf.io/qbx4m)).
 
 ### Example Analyses and Scripts
-To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD_LITE/blob/main/exp/run_MVPD.py):
+To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD/blob/main/exp/run_MVPD.py):
 ```
 cd exp/
 python3 run_MVPD.py
@@ -55,7 +55,7 @@ We have also provided a [tutorial](https://github.com/sccnlab/PyMVPD_LITE/blob/m
 To generate your own scripts, please follow the three steps:
 ```
 import os
-from mvpdlite import data_loading, model_exec
+from mvpd import data_loading, model_exec
 ```
 Step 1 - Analysis Specification
 ```
