@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from mvpdlite.preprocessing.dataset_processing import apply_mask, roi_array
+from mvpd.preprocessing.dataset_processing import apply_mask, roi_array
 
 def load_data(sub, total_run, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, roidata_save_dir):
     print("start loading data of", sub)

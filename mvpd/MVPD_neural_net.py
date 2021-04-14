@@ -13,6 +13,8 @@ from mvpd.dataloader.loader_neural_net import ROI_Dataset
 from mvpd.evaluation import var_expl
 from mvpd.viz import viz_map
 
+np.seterr(divide='ignore', invalid='ignore')
+
 def save_model(net, optim, epoch, ckpt_fname):
     state_dict = net.state_dict()
     for key in state_dict.keys():

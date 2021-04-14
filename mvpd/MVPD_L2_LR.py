@@ -3,10 +3,10 @@ import os
 import numpy as np
 import nibabel as nib
 import itertools as it
-from mvpdlite.dataloader.loader_regression import ROI_Dataset
-from mvpdlite.func_regression.L2_LR import L2_LR
-from mvpdlite.evaluation import var_expl
-from mvpdlite.viz import viz_map
+from mvpd.dataloader.loader_regression import ROI_Dataset
+from mvpd.func_regression.L2_LR import L2_LR
+from mvpd.evaluation import var_expl
+from mvpd.viz import viz_map
 
 def run_L2_LR(model_type, sub, total_run, alpha, roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction):
     # create output folder if not exists
