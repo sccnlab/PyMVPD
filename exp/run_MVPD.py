@@ -1,4 +1,5 @@
-import os
+import os, sys
+sys.path.append("..")
 from mvpd import data_loading, model_exec
 
 """
@@ -11,17 +12,17 @@ total_run=8
 
 # Functional Data
 filepath_func=[]
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run1.nii.gz']
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run2.nii.gz']
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run3.nii.gz']
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run4.nii.gz']
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run5.nii.gz']
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run6.nii.gz']
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run7.nii.gz']
-filepath_func+=['./testdata/'+sub+'/'+sub+'_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run8.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run1.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run2.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run3.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run4.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run5.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run6.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run7.nii.gz']
+filepath_func+=['./testdata/sub-01/sub-01_movie_bold_space-MNI152NLin2009cAsym_preproc_denoised_run8.nii.gz']
 
 # Predictor ROI Mask
-filepath_mask1='./testdata/'+sub+'/'+sub+'_FFA_80vox_bin.nii.gz'
+filepath_mask1='./testdata/sub-01/sub-01_FFA_80vox_bin.nii.gz'
 # Target ROI Mask
 filepath_mask2='./testdata/GM_thr0.1_bin.nii.gz'
 
@@ -35,7 +36,7 @@ roidata_save_dir='./testdata/roi_data/'
 results_save_dir='./results/'
 
 # MVPD Model
-model_type='L2_LR' # ['PCA_LR', 'L2_LR', 'NN_1layer', 'NN_5layer', 'NN_5layer_dense']
+model_type='NN_1layer' # ['PCA_LR', 'L2_LR', 'NN_1layer', 'NN_5layer', 'NN_5layer_dense']
 
 # only for PCA_LR
 num_pc=3 # number of principal components used
