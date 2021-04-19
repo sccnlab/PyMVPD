@@ -49,7 +49,7 @@ cd exp/
 python3 run_MVPD.py
 ```
 
-We have also provided a [tutorial](https://github.com/sccnlab/PyMVPD_LITE/blob/main/exp/PyMVPD_LITE_Tutorial.ipynb) in jupyter notebook. Feel free to check it out!
+We have also provided a [tutorial](https://github.com/sccnlab/PyMVPD/blob/main/exp/PyMVPD_Tutorial.ipynb) in jupyter notebook. Feel free to check it out!
 
 ## Customization
 To generate your own scripts, please follow the three steps:
