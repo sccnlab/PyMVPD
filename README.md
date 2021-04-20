@@ -12,6 +12,9 @@ PyMVPD: MultiVariate Pattern Dependence (MVPD) Analysis in Python
 * NN_5layer: 5-layer fully-connected linear neural network model
 * NN_5layer_dense: 5-layer fully-connected linear neural network model with dense connections
 
+## Workflow
+<img src="/PyMVPD_workflow.png" width="750"/>
+
 ## Installation & Dependencies
 Before installing PyMVPD, you should first install [PyTorch](https://pytorch.org/get-started/locally/) on your system. PyTorch is used to support the construction of neural network models in PyMVPD. If you are only interested in using linear regression models for your MVPD analyses, you can go and check the light version [PyMVPD_LITE](https://github.com/sccnlab/PyMVPD_LITE) where PyTorch is not required.
 
