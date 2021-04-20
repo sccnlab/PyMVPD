@@ -36,7 +36,7 @@ roidata_save_dir='./testdata/roi_data/'
 results_save_dir='./results/'
 
 # MVPD Model
-model_type='NN_1layer' # ['PCA_LR', 'L2_LR', 'NN_1layer', 'NN_5layer', 'NN_5layer_dense']
+model_type='L2_LR' # ['PCA_LR', 'L2_LR', 'NN_1layer', 'NN_5layer', 'NN_5layer_dense']
 
 # only for PCA_LR
 num_pc=3 # number of principal components used
