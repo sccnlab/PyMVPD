@@ -16,7 +16,9 @@ PyMVPD: MultiVariate Pattern Dependence (MVPD) Analysis in Python
 <img src="/PyMVPD_workflow.png" width="750"/>
 
 ## Installation & Dependencies
-The easiest way to install the package is to execute (possibly in a [new virtual environment](https://packaging.python.org/tutorials/installing-packages/#creating-and-using-virtual-environments)) the following command:
+Before installing PyMVPD, you should first install [PyTorch](https://pytorch.org/get-started/locally/) on your system. PyTorch is used to support the construction of neural network models. If you are only interested in using linear regression models for the MVPD analysis, you can go and check the light version [PyMVPD_LITE](https://github.com/sccnlab/PyMVPD_LITE) where PyTorch is not required.
+
+The easiest way to install the PyMVPD package is to execute (possibly in a [new virtual environment](https://packaging.python.org/tutorials/installing-packages/#creating-and-using-virtual-environments)) the following command:
 ```
 pip install PyMVPD
 ```
@@ -25,7 +27,7 @@ You can also install from the GitHub [repository](https://github.com/sccnlab/PyM
 git clone https://github.com/sccnlab/PyMVPD.git
 pip install -r requirements.txt
 ```
-The following packages need to be installed to use PyMVPD:
+In addition to PyTorch, the following packages need to be installed to use PyMVPD:
 * python >= 3.6
 * nibabel>=3.2.1
 * numpy>=1.19.3
