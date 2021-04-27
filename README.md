@@ -1,6 +1,6 @@
 # PyMVPD
 
-PyMVPD: MultiVariate Pattern Dependence (MVPD) Analysis in Python
+PyMVPD is a Python-based toolbox to model the multivariate interactions between brain regions using fMRI data. You can find a description of the MVPD method in this article: https://doi.org/10.1371/journal.pcbi.1005799.
 
 ## MVPD Model Family
 1. Linear Regression Models
