@@ -124,5 +124,38 @@ model_exec.MVPD_exec(model_type, sub, total_run,
                      roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
 ```
 
+## Citation
+PyMVPD has been used in:
+
+- PyMVPD: A toolbox for multivariate pattern dependence. [PDF](https://www.biorxiv.org/content/10.1101/2021.10.12.464157v1.full.pdf) <br/>
+Fang, M., Poskanzer, C., Anzellotti, S.
+
+- Identifying hubs that integrate responses across multiple category-selective regions.<br/>
+Fang, M., Aglinskas, A., Li, Y., Anzellotti, S. 
+
+If you plan to use the toolbox, please consider citing this.
+
+```
+@inproceedings{puig2018virtualhome,
+  title={Virtualhome: Simulating household activities via programs},
+  author={Puig, Xavier and Ra, Kevin and Boben, Marko and Li, Jiaman and Wang, Tingwu and Fidler, Sanja and Torralba, Antonio},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={8494--8502},
+  year={2018}
+}
+
+@article {Fang2021.10.12.464157,
+	author = {Fang, Mengting and Poskanzer, Craig and Anzellotti, Stefano},
+	title = {PyMVPD: A toolbox for multivariate pattern dependence},
+	elocation-id = {2021.10.12.464157},
+	year = {2021},
+	doi = {10.1101/2021.10.12.464157},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2021/10/14/2021.10.12.464157},
+	eprint = {https://www.biorxiv.org/content/early/2021/10/14/2021.10.12.464157.full.pdf},
+	journal = {bioRxiv}
+}
+
+
 ## Contact
 Reach out to Mengting Fang (mtfang0707@gmail.com) for questions, suggestions and feedback!
