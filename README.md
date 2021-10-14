@@ -1,6 +1,8 @@
 # PyMVPD
 
-PyMVPD is a Python-based toolbox to model the multivariate interactions between brain regions using fMRI data. You can find a description of the MVPD method in this article: https://doi.org/10.1371/journal.pcbi.1005799.
+PyMVPD is a Python-based toolbox to model the multivariate interactions between brain regions using fMRI data. You can find a description of the MVPD method in this [article](https://doi.org/10.1371/journal.pcbi.1005799).
+
+[NEW!] We added a preprint with detailed descriptions about the toolbox and example applications. Check it out [here](https://biorxiv.org/cgi/content/short/2021.10.12.464157v1)!
 
 ## MVPD Model Family
 1. Linear Regression Models
