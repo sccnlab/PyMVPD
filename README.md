@@ -136,16 +136,12 @@ Fang, M., Aglinskas, A., Li, Y., Anzellotti, S.
 If you plan to use the toolbox, please consider citing this.
 
 ```
-@article {Fang2021.10.12.464157,
-	author = {Fang, Mengting and Poskanzer, Craig and Anzellotti, Stefano},
-	title = {PyMVPD: A toolbox for multivariate pattern dependence},
-	elocation-id = {2021.10.12.464157},
-	year = {2021},
-	doi = {10.1101/2021.10.12.464157},
-	publisher = {Cold Spring Harbor Laboratory},
-	URL = {https://www.biorxiv.org/content/early/2021/10/14/2021.10.12.464157},
-	eprint = {https://www.biorxiv.org/content/early/2021/10/14/2021.10.12.464157.full.pdf},
-	journal = {bioRxiv}
+@article{fang2021pymvpd,
+  title={PyMVPD: A toolbox for multivariate pattern dependence},
+  author={Fang, Mengting and Poskanzer, Craig and Anzellotti, Stefano},
+  journal={bioRxiv},
+  year={2021},
+  publisher={Cold Spring Harbor Laboratory}
 }
 ```
 
