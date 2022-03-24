@@ -1,6 +1,8 @@
 # PyMVPD
 
-PyMVPD is a Python-based toolbox to model the multivariate interactions between brain regions using fMRI data. You can find a description of the MVPD method in this article: https://doi.org/10.1371/journal.pcbi.1005799.
+PyMVPD is a Python-based toolbox to model the multivariate interactions between brain regions using fMRI data. You can find a description of the MVPD method in this [article](https://doi.org/10.1371/journal.pcbi.1005799).
+
+[NEW!] We added a preprint with detailed descriptions about the toolbox and example applications. Check it out [here](https://biorxiv.org/cgi/content/short/2021.10.12.464157v1)!
 
 ## MVPD Model Family
 1. Linear Regression Models
@@ -120,6 +122,27 @@ model_exec.MVPD_exec(model_type, sub, total_run,
                      alpha, num_pc, # reg params
                      input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay, # nn params 
                      roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
+```
+
+## Citation
+PyMVPD has been used in:
+
+- PyMVPD: A toolbox for multivariate pattern dependence. [PDF](https://www.biorxiv.org/content/10.1101/2021.10.12.464157v1.full.pdf) <br/>
+Fang, M., Poskanzer, C., Anzellotti, S.
+
+- Identifying hubs that integrate responses across multiple category-selective regions.<br/>
+Fang, M., Aglinskas, A., Li, Y., Anzellotti, S. 
+
+If you plan to use the toolbox, please consider citing this.
+
+```
+@article{fang2021pymvpd,
+  title={PyMVPD: A toolbox for multivariate pattern dependence},
+  author={Fang, Mengting and Poskanzer, Craig and Anzellotti, Stefano},
+  journal={bioRxiv},
+  year={2021},
+  publisher={Cold Spring Harbor Laboratory}
+}
 ```
 
 ## Contact
