@@ -8,34 +8,36 @@ from mvpd.func_regression.L2_LR import L2_LR
 from mvpd.evaluation import var_expl
 from mvpd.viz import viz_map
 
-def run_L2_LR(model_type, sub, total_run, alpha, roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction):
+def run_L2_LR(model_type, sub, total_run, leave_k, alpha, crossValid, roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction):
     # create output folder if not exists
     if not os.path.exists(results_save_dir):
            os.mkdir(results_save_dir)
    
-    for this_run in range(1, total_run+1):
-        print("test run:", this_run)
+    for this_run in range(1, total_run-leave_k+2):
+        print("test run:", np.arange(this_run, this_run+leave_k))
         # Load functioanl data and ROI masks
         # Training 
         roi_train = ROI_Dataset()
-        roi_train.get_train(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run)
+        roi_train.get_train(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run, leave_k)
         ROI_1_train = roi_train[:]['ROI_1']
         ROI_2_train = roi_train[:]['ROI_2']
         # Testing 
         roi_test = ROI_Dataset()
-        roi_test.get_test(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run)
+        roi_test.get_test(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run, leave_k)
         ROI_1_test = roi_test[:]['ROI_1']
         ROI_2_test = roi_test[:]['ROI_2']
         
         # L2 Regularized Linear Regression Model
-        predict_ROI_2_test, err_LR = L2_LR(ROI_1_train, ROI_2_train, ROI_1_test, ROI_2_test, alpha)
+        predict_ROI_2_test, err_LR = L2_LR(ROI_1_train, ROI_2_train, ROI_1_test, ROI_2_test, alpha, crossValid)
            
         if save_prediction:
            np.save(results_save_dir+sub+'_predict_ROI_2_'+model_type+'_testrun'+str(this_run)+'.npy', predict_ROI_2_test)
 
         # Evaluation: variance explained
-        varexpl = var_expl.eval_var_expl(err_LR, ROI_2_test)
-    
+        varexpl_nonzero, varexpl = var_expl.eval_var_expl(err_LR, ROI_2_test)
+        
         # Visualization
+        var_expl_map_nonzero, var_expl_img_nonzero = viz_map.cmetric_to_map(filepath_mask2, varexpl_nonzero)
         var_expl_map, var_expl_img = viz_map.cmetric_to_map(filepath_mask2, varexpl)
+        nib.save(var_expl_img_nonzero, results_save_dir+sub+'_var_expl_map_nonzero_'+model_type+'_testrun'+str(this_run)+'.nii.gz')
         nib.save(var_expl_img, results_save_dir+sub+'_var_expl_map_'+model_type+'_testrun'+str(this_run)+'.nii.gz')

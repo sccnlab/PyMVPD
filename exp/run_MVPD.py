@@ -42,6 +42,7 @@ model_type='L2_LR' # ['PCA_LR', 'L2_LR', 'NN_1layer', 'NN_5layer', 'NN_5layer_de
 num_pc=3 # number of principal components used
 
 # only for L2_LR
+crossValid=False # cross validation
 alpha=0.01 # regularization strength
 
 # only for neural networks (NN_1layer, NN_5layer, NN_5layer_dense)
@@ -56,6 +57,9 @@ learning_rate=1e-3
 momentum_factor=0.9  
 w_decay=0 # weight decay (L2 penalty)
 
+# Leave k run out
+leave_k=1
+
 # Save Settings
 save_prediction=False # default
 
@@ -67,7 +71,7 @@ data_loading.load_data(sub, total_run, roi_1_name, roi_2_name, filepath_func, fi
 """
 Step 3 - Analysis Execution
 """
-model_exec.MVPD_exec(model_type, sub, total_run, 
-                     alpha, num_pc, # reg params
+model_exec.MVPD_exec(model_type, sub, total_run, leave_k,
+                     alpha, crossValid, num_pc, # reg params
                      input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay, # nn params 
                      roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
