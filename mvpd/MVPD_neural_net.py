@@ -83,7 +83,7 @@ def NN_test(net, output_size, testloader, epoch, results_save_dir):
     err_NN = ROI_2_pred - ROI_2_target
     return err_NN, ROI_2_target, ROI_2_pred
 
-def run_neural_net(model_type, sub, total_run,
+def run_neural_net(model_type, sub, total_run, leave_k,
                    input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay,
                    roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction):
 
@@ -97,19 +97,19 @@ def run_neural_net(model_type, sub, total_run,
      if not os.path.exists(results_save_dir):
             os.mkdir(results_save_dir)    
    
-     for this_run in range(1, total_run+1):
-         print("test run:", this_run)
+     for this_run in range(1, total_run-leave_k+2):
+         print("test run:", np.arange(this_run, this_run+leave_k))
          results_save_dir_run = results_save_dir + sub + '_' + model_type + '_testrun' + str(this_run) + '/'
          if not os.path.exists(results_save_dir_run):
                 os.mkdir(results_save_dir_run)
          # Load functioanl data and ROI masks 
          # Training 
          roi_train = ROI_Dataset()
-         roi_train.get_train(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run)
+         roi_train.get_train(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run, leave_k)
          trainloader = DataLoader(roi_train, batch_size, shuffle=True, num_workers=0, pin_memory=True) 
          # Testing 
          roi_test = ROI_Dataset()
-         roi_test.get_test(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run)
+         roi_test.get_test(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run, leave_k)
          testloader = DataLoader(roi_test, batch_size, shuffle=False, num_workers=0, pin_memory=True) 
    
          net = NN_model(input_size, hidden_size, output_size).to(device)
@@ -127,9 +127,11 @@ def run_neural_net(model_type, sub, total_run,
                     np.save(results_save_dir_run+sub+'_predict_ROI_2_'+model_type+'_testrun'+str(this_run)+'_%depochs.npy' % epoch, ROI_2_pred) 
 
                  # Evaluation: variance explained
-                 varexpl = var_expl.eval_var_expl(err_NN, ROI_2_test)
+                 varexpl_nonzero, varexpl = var_expl.eval_var_expl(err_NN, ROI_2_test)
 
                  # Visualization
+                 var_expl_map_nonzero, var_expl_img_nonzero = viz_map.cmetric_to_map(filepath_mask2, varexpl_nonzero)
                  var_expl_map, var_expl_img = viz_map.cmetric_to_map(filepath_mask2, varexpl)
+                 nib.save(var_expl_img_nonzero, results_save_dir+sub+'_var_expl_map_nonzero_'+model_type+'_testrun'+str(this_run)+'.nii.gz')
                  nib.save(var_expl_img, results_save_dir_run+sub+'_var_expl_map_'+model_type+'_testrun'+str(this_run)+'_%depochs.nii.gz' % epoch)
 

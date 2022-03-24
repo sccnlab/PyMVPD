@@ -12,19 +12,19 @@ def MVPD_exec(model_type, sub, total_run, leave_k,
     
     if model_type == "L2_LR":
        print("\nstart running L2_LR model for", sub)
-       run_L2_LR(model_type, sub, total_run, 
-                 alpha, 
+       run_L2_LR(model_type, sub, total_run, leave_k,
+                 alpha, crossValid, 
                  roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
     
     elif model_type == "PCA_LR":
        print("\nstart running PCA_LR model for", sub)
-       run_PCA_LR(model_type, sub, total_run, 
+       run_PCA_LR(model_type, sub, total_run, leave_k, 
                   num_pc, 
                   roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
 
     elif model_type == "NN_1layer" or model_type == "NN_5layer" or model_type == "NN_5layer_dense":
        print("\nstart running "+model_type+" model for", sub)
-       run_neural_net(model_type, sub, total_run,
+       run_neural_net(model_type, sub, total_run, leave_k,
                       input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay,
                       roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
     else:
@@ -33,14 +33,15 @@ def MVPD_exec(model_type, sub, total_run, leave_k,
  
     print("\naverage results across runs")
     if model_type == "L2_LR" or model_type == "PCA_LR": 
-       avgruns_reg(model_type, sub, total_run, results_save_dir)
+       avgruns_reg(model_type, sub, total_run, leave_k, results_save_dir)
     elif model_type == "NN_1layer" or model_type == "NN_5layer" or model_type == "NN_5layer_dense":
-       avgruns_nn(model_type, sub, total_run, num_epochs, save_freq, results_save_dir)
+       avgruns_nn(model_type, sub, total_run, leave_k, num_epochs, save_freq, results_save_dir)
 
     log_filename = results_save_dir+sub+"_"+model_type+"_log.txt"
     log_file = open(log_filename, 'w')
     log_file.write("sub = "+sub+",\n")
     log_file.write("total_run = "+str(total_run)+",\n")
+    log_file.write("leave_k_run_out = "+str(leave_k)+",\n")
     log_file.write("predictor_roi: "+roi_1_name+",\n")
     log_file.write("target_roi: "+roi_2_name+",\n")
     log_file.write("model_type = "+model_type+",\n")
