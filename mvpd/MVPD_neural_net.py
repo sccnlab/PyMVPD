@@ -1,4 +1,4 @@
-# MVPD - Neural Network Model
+# MVPD neural network model
 import os
 import importlib
 import nibabel as nib
@@ -25,7 +25,7 @@ def save_model(net, optim, epoch, ckpt_fname):
         'optimizer': optim},
         ckpt_fname)
 
-def NN_train(net, model_type, trainloader, criterion, optimizer, epoch, print_freq, save_freq, results_save_dir):
+def NN_train(params, net, trainloader, criterion, optimizer, epoch, save_dir):
     net.train()
     running_loss = 0.0
     for i, data in enumerate(trainloader):
@@ -48,22 +48,22 @@ def NN_train(net, model_type, trainloader, criterion, optimizer, epoch, print_fr
         loss.item()
         running_loss += loss.data
         # print every print_freq mini-batches 
-        if i % print_freq == (print_freq-1):
+        if i % params.print_freq == (params.print_freq-1):
             print('[%d, %5d] loss: %.3f' %
-                  (epoch, i + 1, running_loss / print_freq))
+                  (epoch, i + 1, running_loss / params.print_freq))
             running_loss = 0.0
 
-    if epoch % save_freq == 0:
-        save_model(net, optimizer, epoch, os.path.join(results_save_dir, 'MVPD_'+model_type+'_%03d.ckpt' % epoch))
-        print("Model saved in file: " + results_save_dir + "MVPD_"+model_type+"_%03d.ckpt" % epoch)
+    if epoch % params.save_freq == 0:
+        save_model(net, optimizer, epoch, os.path.join(save_dir, 'MVPD_'+params.NN_type+'_'+str(params.num_hLayer)+'hLayer_%03d.ckpt' % epoch))
+        print("Model saved in file: "+save_dir+"MVPD_"+params.NN_type+"_"+str(params.num_hLayer)+"hLayer_%03d.ckpt" % epoch)
 
-def NN_test(net, output_size, testloader, epoch, results_save_dir):
+def NN_test(params, net, testloader):
     net.eval()
     score = []
     ROI_2_pred = []
     ROI_2_target = []
-    ROI_2_pred = np.reshape(ROI_2_pred, [-1, output_size])
-    ROI_2_target = np.reshape(ROI_2_target, [-1, output_size])
+    ROI_2_pred = np.reshape(ROI_2_pred, [-1, params.output_size])
+    ROI_2_target = np.reshape(ROI_2_target, [-1, params.output_size])
 
     for i, data in enumerate(testloader):
             # get the inputs
@@ -83,55 +83,61 @@ def NN_test(net, output_size, testloader, epoch, results_save_dir):
     err_NN = ROI_2_pred - ROI_2_target
     return err_NN, ROI_2_target, ROI_2_pred
 
-def run_neural_net(model_type, sub, total_run, leave_k,
-                   input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay,
-                   roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction):
+def run_neural_net(inputinfo, params):
+     print("total_run:", params.total_run)
+     print("leave_k_run_out:", params.leave_k)
 
-     NN_module = importlib.import_module('mvpd.func_neural_net.%s'%(model_type))
-     NN_model = getattr(NN_module, model_type)
-    
+     base1 = os.path.basename(inputinfo.filepath_mask1)
+     base2 = os.path.basename(inputinfo.filepath_mask2)
+
+     inputinfo.roi_1_name = base1.split('.nii')[0]
+     inputinfo.roi_2_name = base2.split('.nii')[0]
+
+     if params.NN_type in ['NN_standard', 'NN_dense']:
+        NN_module = importlib.import_module('mvpd.func_neural_net.%s'%(params.NN_type))
+     else: # custom NN model
+        NN_module = importlib.import_module('mvpd.custom_func.NN_custom')
+
+     NN_model = getattr(NN_module, params.NN_type)
+
      # Device configuration
      device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
-     # create output folder if not exists
-     if not os.path.exists(results_save_dir):
-            os.mkdir(results_save_dir)    
-   
-     for this_run in range(1, total_run-leave_k+2):
-         print("test run:", np.arange(this_run, this_run+leave_k))
-         results_save_dir_run = results_save_dir + sub + '_' + model_type + '_testrun' + str(this_run) + '/'
+     for this_run in range(1, params.total_run-params.leave_k+2):
+         print("test run:", np.arange(this_run, this_run+params.leave_k))
+         results_save_dir_run = inputinfo.results_save_dir+inputinfo.sub+'_'+params.NN_type+'_'+str(params.num_hLayer)+'hLayer_testrun'+str(this_run)+'/'
          if not os.path.exists(results_save_dir_run):
                 os.mkdir(results_save_dir_run)
          # Load functioanl data and ROI masks 
          # Training 
          roi_train = ROI_Dataset()
-         roi_train.get_train(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run, leave_k)
-         trainloader = DataLoader(roi_train, batch_size, shuffle=True, num_workers=0, pin_memory=True) 
+         roi_train.get_train(inputinfo.roidata_save_dir, inputinfo.roi_1_name, inputinfo.roi_2_name, this_run, params.total_run, params.leave_k)
+         trainloader = DataLoader(roi_train, params.batch_size, shuffle=True, num_workers=0, pin_memory=True) 
          # Testing 
          roi_test = ROI_Dataset()
-         roi_test.get_test(roidata_save_dir, roi_1_name, roi_2_name, this_run, total_run, leave_k)
-         testloader = DataLoader(roi_test, batch_size, shuffle=False, num_workers=0, pin_memory=True) 
+         roi_test.get_test(inputinfo.roidata_save_dir, inputinfo.roi_1_name, inputinfo.roi_2_name, this_run, params.total_run, params.leave_k)
+         testloader = DataLoader(roi_test, params.batch_size, shuffle=False, num_workers=0, pin_memory=True) 
    
-         net = NN_model(input_size, hidden_size, output_size).to(device)
+         net = NN_model(params.input_size, params.hidden_size, params.output_size, params.num_hLayer).to(device)
          
          # Loss and optimizer
          criterion = nn.MSELoss() # mean squared error
-         optimizer = optim.SGD(net.parameters(), lr=learning_rate, momentum=momentum_factor, weight_decay=w_decay)
+         optimizer = optim.SGD(net.parameters(), lr=params.learning_rate, momentum=params.momentum_factor, weight_decay=params.w_decay)
 
-         for epoch in range(num_epochs+1):  # loop over the dataset multiple times
-             NN_train(net, model_type, trainloader, criterion, optimizer, epoch, print_freq, save_freq, results_save_dir_run)
-             if (epoch != 0) & (epoch % save_freq == 0):
-                 err_NN, ROI_2_test, ROI_2_pred = NN_test(net, output_size, testloader, epoch, results_save_dir_run)
+         for epoch in range(params.num_epochs+1):  # loop over the dataset multiple times
+             NN_train(params, net, trainloader, criterion, optimizer, epoch, results_save_dir_run)
+             if (epoch != 0) & (epoch % params.save_freq == 0):
+                 err_NN, ROI_2_test, ROI_2_pred = NN_test(params, net, testloader)
                  
-                 if save_prediction:
-                    np.save(results_save_dir_run+sub+'_predict_ROI_2_'+model_type+'_testrun'+str(this_run)+'_%depochs.npy' % epoch, ROI_2_pred) 
+                 if inputinfo.save_prediction:
+                    np.save(results_save_dir_run+inputinfo.sub+'_predict_ROI_2_'+params.NN_type+'_testrun'+str(this_run)+'_%depochs.npy' % epoch, ROI_2_pred) 
 
                  # Evaluation: variance explained
-                 varexpl_nonzero, varexpl = var_expl.eval_var_expl(err_NN, ROI_2_test)
+                 varexpl_threshold, varexpl = var_expl.eval_var_expl(err_NN, ROI_2_test)
 
                  # Visualization
-                 var_expl_map_nonzero, var_expl_img_nonzero = viz_map.cmetric_to_map(filepath_mask2, varexpl_nonzero)
-                 var_expl_map, var_expl_img = viz_map.cmetric_to_map(filepath_mask2, varexpl)
-                 nib.save(var_expl_img_nonzero, results_save_dir+sub+'_var_expl_map_nonzero_'+model_type+'_testrun'+str(this_run)+'.nii.gz')
-                 nib.save(var_expl_img, results_save_dir_run+sub+'_var_expl_map_'+model_type+'_testrun'+str(this_run)+'_%depochs.nii.gz' % epoch)
+                 var_expl_map_threshold, var_expl_img_threshold = viz_map.cmetric_to_map(inputinfo.filepath_mask2, varexpl_threshold)
+                 var_expl_map, var_expl_img = viz_map.cmetric_to_map(inputinfo.filepath_mask2, varexpl)
+                 nib.save(var_expl_img_threshold, results_save_dir_run+inputinfo.sub+'_var_expl_map_threshold_'+params.NN_type+'_testrun'+str(this_run)+'_%depochs.nii.gz' % epoch)
+                 nib.save(var_expl_img, results_save_dir_run+inputinfo.sub+'_var_expl_map_'+params.NN_type+'_testrun'+str(this_run)+'_%depochs.nii.gz' % epoch)
 
