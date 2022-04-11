@@ -10,8 +10,8 @@ PyMVPD is a Python-based toolbox to model the multivariate interactions between 
 * PCA_LR: linear regression model with no regularization after principal component analysis (PCA)
 
 2. Neural Network Models
-* NN_1layer: 1-layer fully-connected linear neural network model
-* NN_5layer: 5-layer fully-connected linear neural network model
+* NN_standard: 1-layer fully-connected linear neural network model
+* NN_dense: 5-layer fully-connected linear neural network model
 * NN_5layer_dense: 5-layer fully-connected linear neural network model with dense connections
 
 In addition to these pre-implemented models, you can also customize your own MVPD models by adding scripts under [mvpd/](https://github.com/sccnlab/PyMVPD/tree/main/mvpd).
