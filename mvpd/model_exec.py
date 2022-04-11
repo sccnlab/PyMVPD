@@ -1,0 +1,42 @@
+import os, sys
+from mvpd.params_check import params_check
+from mvpd.MVPD_lin_reg import run_lin_reg
+from mvpd.MVPD_neural_net import run_neural_net
+from mvpd.avgrun_regression import avgruns_reg
+from mvpd.avgrun_neural_net import avgruns_nn
+
+def MVPD_exec(inputinfo, params):
+    # create output folder if not exists
+    if not os.path.exists(inputinfo.results_save_dir):
+           os.mkdir(inputinfo.results_save_dir)
+ 
+    total_run = len(inputinfo.filepath_func)
+    params.total_run = total_run
+    # check validity of parameters
+    params_check(params)
+    
+    if params.mode_class=='LR':
+       print("start running MVPD linear regression model for", inputinfo.sub)
+       run_lin_reg(inputinfo, params)
+    elif params.mode_class=='NN':
+       print("\nstart running MVPD "+params.NN_type+" model for", inputinfo.sub)
+       run_neural_net(inputinfo, params)
+
+    print("\naverage results across runs")
+    if params.mode_class=='LR':
+       avgruns_reg(inputinfo, params) 
+    elif params.mode_class=='NN':
+       avgruns_nn(inputinfo, params) 
+    print("\ndone!")
+
+    # logging
+    print("inputinfo:", vars(inputinfo))
+    print("params:", vars(params))
+    print("log information is saved in "+inputinfo.results_save_dir+inputinfo.sub+"_log.txt")
+    log_filename = inputinfo.results_save_dir+inputinfo.sub+"_log.txt"
+    log_file = open(log_filename, 'w')
+    log_file.write("input info:\n")
+    log_file.write(str(vars(inputinfo)))
+    log_file.write("model params:\n")
+    log_file.write(str(vars(params)))
+    log_file.close()
