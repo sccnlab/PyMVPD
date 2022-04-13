@@ -93,10 +93,10 @@ inputinfo.save_prediction=False # whether to save predicted timecourses in the t
 
 # MVPD Model Parameters
 params=data_loading.structtype()
-params.leave_k=1 # cross validation: leave k run out, default=1
-
 ## general MVPD model class
 params.mode_class='NN' # ['LR'(default), 'NN']
+## cross validation
+params.leave_k=1 # leave k run out, default=1
 
 ### LR model parameters
 #### dimensionality reduction
