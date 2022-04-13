@@ -30,16 +30,16 @@ inputinfo.save_prediction=False # whether to save the model prediction of the ti
 
 # MVPD Model Parameters
 params=data_loading.structtype()
+## general MVPD model class
+params.mode_class='NN' # ['LR'(default), 'NN']
 ## cross validation: leave k run out
 params.leave_k=1 # leave one run out(default)
-## dimensionality reduction
+
+### LR model parameters
+#### dimensionality reduction
 params.dim_reduction=False # False(default)
 params.dim_type='pca' # ['pca'(default), 'ica']
 params.num_dim=3 # number of dimensions after dimensionality reduction, default=3
-## general MVPD model class
-params.mode_class='NN' # ['LR'(default), 'NN']
-
-### LR model parameters
 #### regularization 
 params.lin_reg=False # False(default)
 params.reg_type='RidgeCV' # ['Ridge'(default), 'Lasso', 'RidgeCV']
