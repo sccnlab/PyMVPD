@@ -11,19 +11,19 @@ Available built-in model components:
 * Regularization: [Lasso](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html) (L1), [Ridge](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) (L2), [RidgeCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html) (L2 with build-in cross-validation)
 * Cross validation: leave k run out
 
-Example LR models:
-* L2_LR: linear regression model with L2 regularization
-* PCA_LR: linear regression model with no regularization after principal component analysis (PCA)
+  Example LR models:
+  * L2_LR: linear regression model with L2 regularization
+  * PCA_LR: linear regression model with no regularization after principal component analysis (PCA)
 
 2. Neural Network (NN) Models
 Available built-in model components:
 * NN_standard: fully connected feedforward neural network model
 * NN_dense: fully connected feedforward neural network model with dense connections
 
-Example NN models:
-* NN_1layer: 1-layer fully-connected linear neural network model
-* NN_5layer: 5-layer fully-connected linear neural network model
-* NN_5layer_dense: 5-layer fully-connected linear neural network model with dense connections
+  Example NN models:
+  * NN_1layer: 1-layer fully-connected linear neural network model
+  * NN_5layer: 5-layer fully-connected linear neural network model
+  * NN_5layer_dense: 5-layer fully-connected linear neural network model with dense connections
 
 In addition to these pre-implemented models, you can also customize your own MVPD models by adding scripts under [mvpd/](https://github.com/sccnlab/PyMVPD/tree/main/mvpd).
 
