@@ -43,8 +43,3 @@ def avgruns_reg(inputinfo, params):
     var_img_avg_threshold = nib.Nifti1Image(var_data_avg_threshold, var_map_affine)
     nib.save(var_img_avg_threshold, inputinfo.results_save_dir+inputinfo.sub+'_var_expl_map_threshold_avgruns.nii.gz')    
 
-    print("max_vari:", np.max(var_data_avg))
-    print("max_vari_threshold:", np.max(var_data_avg_threshold))
-    print("min_vari:", np.min(var_data_avg))
-    print("min_vari_threshold:", np.min(var_data_avg_threshold))
-
