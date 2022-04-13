@@ -5,13 +5,24 @@ PyMVPD is a Python-based toolbox to model the multivariate interactions between 
 [NEW!] We added a preprint with detailed descriptions about the toolbox and example applications. Check it out [here](https://biorxiv.org/cgi/content/short/2021.10.12.464157v1)!
 
 ## MVPD Model Family
-1. Linear Regression Models
+1. Linear Regression (LR) Models
+Available built-in model components:
+* Dimensionality reduction: principal component analysis ([PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)), independent component analysis ([ICA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html))
+* Regularization: [Lasso](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html) (L1), [Ridge](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) (L2), [RidgeCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html) (L2 with build-in cross-validation)
+* Cross validation: leave k run out
+
+Example LR models:
 * L2_LR: linear regression model with L2 regularization
 * PCA_LR: linear regression model with no regularization after principal component analysis (PCA)
 
-2. Neural Network Models
-* NN_standard: 1-layer fully-connected linear neural network model
-* NN_dense: 5-layer fully-connected linear neural network model
+2. Neural Network (NN) Models
+Available built-in model components:
+* NN_standard: fully connected feedforward neural network model
+* NN_dense: fully connected feedforward neural network model with dense connections
+
+Example NN models:
+* NN_1layer: 1-layer fully-connected linear neural network model
+* NN_5layer: 5-layer fully-connected linear neural network model
 * NN_5layer_dense: 5-layer fully-connected linear neural network model with dense connections
 
 In addition to these pre-implemented models, you can also customize your own MVPD models by adding scripts under [mvpd/](https://github.com/sccnlab/PyMVPD/tree/main/mvpd).
@@ -65,67 +76,61 @@ from mvpd import data_loading, model_exec
 ```
 Step 1 - Analysis Specification
 ```
-sub='sub-01' # subject whose data are to be analyzed
-total_run=XX # total number of experimental runs
-
-# Input functional Data
-filepath_func=[]
+# Model Input Info
+inputinfo=data_loading.structtype()
+inputinfo.sub='sub-01' # subject whose data are to be analyzed
+filepath_func=[] # input functional Data
 filepath_func+=['path/to/functional/data/run1.nii.gz']
 filepath_func+=['path/to/functional/data/run2.nii.gz']
 ......
 
-# Input predictor ROI mask and target ROI mask
-filepath_mask1='path/to/predictor/ROI/mask.nii.gz'
-filepath_mask2='path/to/target/ROI/mask.nii.gz'
+inputinfo.filepath_mask1='path/to/predictor/ROI/mask.nii.gz' # predictor ROI mask
+inputinfo.filepath_mask2='path/to/target/ROI/mask.nii.gz' # target ROI mask
 
-base1=os.path.basename(filepath_mask1)
-base2=os.path.basename(filepath_mask2)
-roi_1_name=base1.split('.nii')[0]
-roi_2_name=base2.split('.nii')[0]
+inputinfo.roidata_save_dir='path/to/save/roidata/' # output data directory
+inputinfo.results_save_dir='path/to/save/results/' # output model results directory
+inputinfo.save_prediction=False # whether to save predicted timecourses in the target ROI
 
-# Output Directory
-roidata_save_dir='path/to/save/roidata/'
-results_save_dir='path/to/save/results/'
+# MVPD Model Parameters
+params=data_loading.structtype()
+params.leave_k=1 # cross validation: leave k run out, default=1
 
-# Choose MVPD model
-model_type='L2_LR' # ['PCA_LR', 'L2_LR', 'NN_1layer', 'NN_5layer', 'NN_5layer_dense']
+## general MVPD model class
+params.mode_class='NN' # ['LR'(default), 'NN']
 
-# Set model parameters
-# Only for PCA_LR
-num_pc=3 # number of principal components used 
+### LR model parameters
+#### dimensionality reduction
+params.dim_reduction=True # whether to perform dimensionality reduction on input data
+params.dim_type='pca' # ['pca'(default), 'ica']
+params.num_dim=3 # number of dimensions after dimensionality reduction, default=3
+#### regularization
+params.lin_reg=True # whether to add regularization term
+params.reg_type='Ridge' # ['Ridge'(default), 'Lasso', 'RidgeCV']
+params.reg_strength=0.001 # regularization strength, default=0.001
+#params.reg_strength_list=[0.1,1.0,10.0] # only for RidgeCV: array of reg_strength values to try, default=(0.1,1.0,10.0)
 
-# Only for L2_LR
-crossValid=False # cross validation
-alpha=0.01 
+### NN model parameters
+params.NN_type='NN_standard' # ['NN_standard'(default), 'NN_dense']
+params.input_size=80 # size of predictor ROI
+params.output_size=53539 # size of target ROI
+params.hidden_size=100 # number of units per hidden layer
+params.num_hLayer=5 # number of hidden layers, default=1
+params.num_epochs=5000 # number of epochs for training, default=5000
+params.save_freq=1000 # checkpoint saving frequency, default=num_epochs
+params.print_freq=100 # results printing out frequency, default=100
+params.batch_size=32 # batch size, default=32
+params.learning_rate=1e-3 # SGD optimizer learning rate, default=1e-3
+params.momentum_factor=0.9 # SGD optimizer momentum, default=0.9
+params.w_decay=0 # SGD optimizer weight decay (L2 penalty)
 
-# Only for neural networks (NN_1layer, NN_5layer, NN_5layer_dense)
-input_size=80 # size of predictor ROI
-output_size=53539 # size of target ROI
-hidden_size=100 # number of units per hidden layer
-num_epochs=5000 # number of epochs for training
-save_freq=1000 # checkpoint saving frequency
-print_freq=100 # results printing out frequency
-batch_size=32 
-learning_rate=1e-3
-momentum_factor=0.9  
-w_decay=0 # weight decay (L2 penalty)
-
-# Leave k run out
-leave_k=1
-
-# Save predicted timecourses
-save_prediction=False # default
 ```
 Step 2 - Data Loading
 ```
-data_loading.load_data(sub, total_run, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, roidata_save_dir)
+data_loading.load_data(inputinfo)
 ```
 Step 3 - Analysis Execution
 ```
-model_exec.MVPD_exec(model_type, sub, total_run, leave_k,
-                     alpha, crossValid, num_pc, # reg params
-                     input_size, output_size, hidden_size, num_epochs, save_freq, print_freq, batch_size, learning_rate, momentum_factor, w_decay, # nn params 
-                     roidata_save_dir, roi_1_name, roi_2_name, filepath_func, filepath_mask1, filepath_mask2, results_save_dir, save_prediction)
+model_exec.MVPD_exec(inputinfo, params)
 ```
 
 ## Citation
