@@ -6,6 +6,13 @@ from mvpd.avgrun_regression import avgruns_reg
 from mvpd.avgrun_neural_net import avgruns_nn
 
 def MVPD_exec(inputinfo, params):
+    """
+    Execute the selected MVPD model and average analysis across runs.
+
+    INPUT FORMAT
+    inputinfo - model input info structure
+    params - model parameters structure
+    """
     # create output folder if not exists
     if not os.path.exists(inputinfo.results_save_dir):
            os.mkdir(inputinfo.results_save_dir)
