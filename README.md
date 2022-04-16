@@ -60,7 +60,7 @@ Target ROI: GM - gray matter.
 * Raw data were first preprocessed using [fMRIPrep](https://fmriprep.readthedocs.io/en/latest/index.html) and then denoised by using CompCor (see more details in [Fang et al. 2019](https://doi.org/10.31234/osf.io/qbx4m)).
 
 ### Example Analyses and Scripts
-To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD/blob/main/exp/run_MVPD.py):
+To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD/blob/main/exp/run_MVPD.py) or other pre-implemented model scripts run_MVPD_xxx.py:
 ```
 cd exp/
 python3 run_MVPD.py
@@ -98,19 +98,8 @@ params.mode_class='NN' # ['LR'(default), 'NN']
 ## cross validation
 params.leave_k=1 # leave k run out, default=1
 
-### NN model parameters
-params.NN_type='NN_standard' # ['NN_standard'(default), 'NN_dense']
-params.input_size=80 # size of predictor ROI
-params.output_size=53539 # size of target ROI
-params.hidden_size=100 # number of units per hidden layer
-params.num_hLayer=1 # number of hidden layers, default=1
-params.num_epochs=5000 # number of epochs for training, default=5000
-params.save_freq=1000 # checkpoint saving frequency, default=num_epochs
-params.print_freq=100 # results printing out frequency, default=100
-params.batch_size=32 # batch size, default=32
-params.learning_rate=1e-3 # SGD optimizer learning rate, default=1e-3
-params.momentum_factor=0.9 # SGD optimizer momentum, default=0.9
-params.w_decay=0 # SGD optimizer weight decay (L2 penalty)
+### LR or NN model parameters
+......
 
 ```
 Step 2 - Data Loading
