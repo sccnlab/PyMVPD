@@ -133,6 +133,100 @@ Step 3 - Analysis Execution
 model_exec.MVPD_exec(inputinfo, params)
 ```
 
+### Model Parameters List
+
+NOTICE: Remember to set the value of the parameter manually if you do not want to use the default value.
+
+- General model parameters
+  - **params.mode_class='LR'** 
+    - This parameter determines the general class of MVPD model to be used.
+    - The available classes are 'LR' linear regression models and 'NN' neural network models.
+    - The default value is 'LR'.
+
+  - **params.leave_k=1**
+    - This parameter determines the number of leave out runs in cross-validation.
+    - The default value is 1 (leave-one-run-out procedure).
+
+- LR model parameters
+  - **params.dim_reduction**: 
+    - This parameter determines whether dimensionality reduction is applied to the input data.
+    - It is only used if you are using a linear regression model by setting params.mode_class='LR'
+    - The default value is false.
+  - **params.dim_type**: 
+    - This parameter determines the type of the dimensionality reduction.
+    - It is only used if you are using a linear regression model and you set "params.dim_reduction=True".
+    - The available values are 'pca', 'ica', or the name of your custom dimensionality reduction method.
+    - The default value is 'pca'.
+  - **params.num_dim**:
+    - This parameter determines the number of dimensions to keep after dimensionality reduction.
+    - It is only used if you are using a linear regression model and you set "params.dim_reduction=True".
+    - The default value is 3.
+    
+  - **params.lin_reg**:
+    - This parameter determines whether to add a regularization term to the linear regression model.
+    - It is only used if you are using a linear regression model by setting params.mode_class='LR'.
+    - The default value is false.
+  - **params.reg_type**
+    - This parameter determines the type of regularization term that you want to add to the linear regression model.
+    - It is only used if you are using a linear regression model with regularization by setting "params.mode_class='LR', params.lin_reg=True".
+    - The available values are 'Ridge', 'Lasso', and 'RidgeCV'.
+    - The default value is 'Ridge'.
+  - **params.reg_strength**
+    - This parameter determines the regularization strength of the chosen regularization term.
+    - It is only used if you are using a linear regression model with regularization by setting "params.mode_class='LR', params.lin_reg=True".
+    - The default value is '0.001'.
+  - **params.reg_strength_list**
+    - This parameter determines the array of regularization strength values to try in the cross-validation for Ridge regression.
+    - It is only used if you are using a linear RidgeCV regression model by setting "params.mode_class='LR', params.lin_reg=True, params.reg_type='RidgeCV'".
+    - The default array is [0.1, 1.0, 10.0].
+
+- NN model parameters
+  - **params.dim_reduction**: 
+    - This parameter determines whether dimensionality reduction is applied to the input data.
+    - It is only used if you are using a linear regression model by setting params.mode_class='LR'.
+    - The default value is false.
+  - **params.dim_type**: 
+    - This parameter determines the type of the dimensionality reduction.
+    - It is only used if you are using a linear regression model and you set "params.dim_reduction=True".
+    - The available types are 'pca', 'ica', or your custom dimensionality reduction method.
+    - The default type is 'pca'.
+  - **params.NN_type**:
+    - This parameter determines the type of the neural network model to be used.
+    - It is only used if you are using a neural network model by setting params.mode_class='NN'.
+    - The available types are 'NN_standard', 'NN_dense', or your custom neural network model.
+    - The default type is 'NN_standard'.
+  - **params.input_size**:
+    - This parameter determines the size of the predictor ROI and must be provided by the user.
+  - **params.output_size**:
+    - This parameter determines the size of the target ROI and must be provided by the user.
+  - **params.hidden_size**:
+    - This parameter determines the number of units per hidden layer.
+    - The default value is 100.
+  - **params.num_hLayer**:
+    - This parameter determines the number of hidden layers.
+    - The default value is 1.
+  - **params.num_epochs**:
+    - This parameter determines the number of epochs for training.
+    - The default value is 5000.
+  - **params.save_freq**:
+    - This parameter determines the frequency of saving checkpoints.
+    - The default value is the number of epochs for training (i.e. params.num_epochs).
+  - **params.print_freq**:
+    - This parameter determines the frequency of printing results.
+    - The default value is 100.
+  - **params.batch_size**:
+    - This parameter determines the batch size when training the neural network model.
+    - The default value is 32.
+  - **params.learning_rate**:
+    - This parameter determines the learning rate of the Stochastic Gradient Descent (SGD) optimizer.
+    - The default value is 1e-3.
+  - **params.momentum_factor**:
+    - This parameter determines the momentum_factor of the Stochastic Gradient Descent (SGD) optimizer.
+    - The default value is 0.9.
+  - **params.params.w_decay**:
+    - This parameter determines the weight decay (L2 penalty) of the Stochastic Gradient Descent (SGD) optimizer.
+    - The default value is 0.
+
 ## Citation
 PyMVPD has been used in:
 
