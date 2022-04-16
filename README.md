@@ -25,7 +25,7 @@ Available built-in model components:
   * NN_5layer: 5-layer fully-connected linear neural network model
   * NN_5layer_dense: 5-layer fully-connected linear neural network model with dense connections
 
-In addition to these pre-implemented models, you can also customize your own MVPD models by adding scripts under [mvpd/](https://github.com/sccnlab/PyMVPD/tree/main/mvpd).
+In addition to these pre-implemented models, you can also customize your own MVPD models by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
 
 ## Workflow
 <img src="/PyMVPD_workflow.png" width="750"/>
