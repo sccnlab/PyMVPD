@@ -60,7 +60,7 @@ Target ROI: GM - gray matter.
 * Raw data were first preprocessed using [fMRIPrep](https://fmriprep.readthedocs.io/en/latest/index.html) and then denoised by using CompCor (see more details in [Fang et al. 2019](https://doi.org/10.31234/osf.io/qbx4m)).
 
 ### Example Analyses and Scripts
-To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD/blob/main/exp/run_MVPD.py) or other pre-implemented model scripts under [mvpd/exp/](https://github.com/sccnlab/PyMVPD/blob/main/exp/)(e.g. run_MVPD_xxx.py):
+To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD/blob/main/exp/run_MVPD.py) or other pre-implemented model scripts under [mvpd/exp](https://github.com/sccnlab/PyMVPD/blob/main/exp/) (e.g. run_MVPD_xxx.py):
 ```
 cd exp/
 python3 run_MVPD.py
