@@ -136,11 +136,9 @@ model_exec.MVPD_exec(inputinfo, params)
 - **inputinfo.results_save_dir**
   - This variable specifies the path to the directory where the results will be saved.
 - **inputinfo.save_prediction** 
-  -whether to save predicted timecourses in the target ROI
-- **inputinfo.save_prediction**  whether to save predicted timecourses in the target ROI
-- **inputinfo.save_prediction** whether to save predicted timecourses in the target ROI
+  - This variable specifies whether to save predicted timecourses in the target ROI.
 
-### Model Parameters List
+### List of Model Parameters
 
 NOTICE: Remember to set the value of the parameter manually if you do not want to use the default value.
 
