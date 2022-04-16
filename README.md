@@ -98,23 +98,12 @@ params.mode_class='NN' # ['LR'(default), 'NN']
 ## cross validation
 params.leave_k=1 # leave k run out, default=1
 
-### LR model parameters
-#### dimensionality reduction
-params.dim_reduction=True # whether to perform dimensionality reduction on input data
-params.dim_type='pca' # ['pca'(default), 'ica']
-params.num_dim=3 # number of dimensions after dimensionality reduction, default=3
-#### regularization
-params.lin_reg=True # whether to add regularization term
-params.reg_type='Ridge' # ['Ridge'(default), 'Lasso', 'RidgeCV']
-params.reg_strength=0.001 # regularization strength, default=0.001
-#params.reg_strength_list=[0.1,1.0,10.0] # only for RidgeCV: array of reg_strength values to try, default=(0.1,1.0,10.0)
-
 ### NN model parameters
 params.NN_type='NN_standard' # ['NN_standard'(default), 'NN_dense']
 params.input_size=80 # size of predictor ROI
 params.output_size=53539 # size of target ROI
 params.hidden_size=100 # number of units per hidden layer
-params.num_hLayer=5 # number of hidden layers, default=1
+params.num_hLayer=1 # number of hidden layers, default=1
 params.num_epochs=5000 # number of epochs for training, default=5000
 params.save_freq=1000 # checkpoint saving frequency, default=num_epochs
 params.print_freq=100 # results printing out frequency, default=100
