@@ -12,7 +12,7 @@ Available built-in model components:
 * Cross validation: leave k run out
 
   Example LR models:
-  * L2_LR: linear regression model with L2 regularization
+  * [L2_LR](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_L2_LR.py): linear regression model with L2 regularization
   * PCA_LR: linear regression model with no regularization after principal component analysis (PCA)
 
 2. Neural Network (NN) Models
