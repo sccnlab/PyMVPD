@@ -126,15 +126,19 @@ model_exec.MVPD_exec(inputinfo, params)
 - **inputinfo.sub**
   - This variable specifies the subject whose data are to be analyzed.
 - **input.filepath_func**
-  - This variable specifies the list of functional data to be analyzed.
+  - This variable specifies the list of paths to the directories containing processed functional data.
 - **inputinfo.filepath_mask1**
-  - This variable specifies the predictor ROI mask.
+  - This variable specifies the path to the directory containing the predictor ROI mask.
 - **inputinfo.filepath_mask2**
-  - This variable specifies the target ROI mask.
-
-inputinfo.roidata_save_dir='path/to/save/roidata/' # output data directory
-inputinfo.results_save_dir='path/to/save/results/' # output model results directory
-inputinfo.save_prediction=False # whether to save predicted timecourses in the target ROI
+  - This variable specifies the path to the directory containing the target ROI mask.
+- **inputinfo.roidata_save_dir**
+  - This variable specifies the path to the directory where the extracted functional data will be saved.
+- **inputinfo.results_save_dir**
+  - This variable specifies the path to the directory where the results will be saved.
+- **inputinfo.save_prediction** 
+  -whether to save predicted timecourses in the target ROI
+- **inputinfo.save_prediction**  whether to save predicted timecourses in the target ROI
+- **inputinfo.save_prediction** whether to save predicted timecourses in the target ROI
 
 ### Model Parameters List
 
