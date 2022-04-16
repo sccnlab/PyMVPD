@@ -25,7 +25,7 @@ Available built-in model components:
   * [NN_5layer](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer.py): 5-layer fully-connected linear neural network model
   * [NN_5layer_dense](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer_dense.py): 5-layer fully-connected linear neural network model with dense connections
 
-In addition to these build-in functions, you can also customize your own functions by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
+In addition to the above build-in functions, you can also customize your own functions by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
 
 ## Workflow
 <img src="/PyMVPD_workflow.png" width="750"/>
@@ -60,7 +60,7 @@ Target ROI: GM - gray matter.
 * Raw data were first preprocessed using [fMRIPrep](https://fmriprep.readthedocs.io/en/latest/index.html) and then denoised by using CompCor (see more details in [Fang et al. 2019](https://doi.org/10.31234/osf.io/qbx4m)).
 
 ### Example Analyses and Scripts
-To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD/blob/main/exp/run_MVPD.py) or other pre-implemented models under [mvpd/exp](https://github.com/sccnlab/PyMVPD/blob/main/exp/) (e.g. run_MVPD_xxx.py):
+To give a quick try for MVPD analysis, you can directly run our example script [run_MVPD.py](https://github.com/sccnlab/PyMVPD/blob/main/exp/run_MVPD.py) or other pre-implemented models under [exp/](https://github.com/sccnlab/PyMVPD/blob/main/exp/) (e.g. run_MVPD_xxx.py):
 ```
 cd exp/
 python3 run_MVPD.py
