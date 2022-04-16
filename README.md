@@ -25,7 +25,7 @@ Available built-in model components:
   * [NN_5layer](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer.py): 5-layer fully-connected linear neural network model
   * [NN_5layer_dense](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer_dense.py): 5-layer fully-connected linear neural network model with dense connections
 
-In addition to these pre-implemented models, you can also customize your own MVPD models by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
+In addition to these build-in functions, you can also customize your own functions by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
 
 ## Workflow
 <img src="/PyMVPD_workflow.png" width="750"/>
@@ -69,7 +69,7 @@ python3 run_MVPD.py
 We have also provided a [tutorial](https://github.com/sccnlab/PyMVPD/blob/main/exp/PyMVPD_Tutorial.ipynb) in jupyter notebook. Feel free to check it out!
 
 ## Customization
-To generate your own scripts, please follow the three steps:
+To customize and run your own MVPD model, please follow the three steps:
 ```
 import os
 from mvpd import data_loading, model_exec
@@ -121,18 +121,32 @@ Step 3 - Analysis Execution
 ```
 model_exec.MVPD_exec(inputinfo, params)
 ```
+### Required Input information 
+
+- **inputinfo.sub**
+  - This variable specifies the subject whose data are to be analyzed.
+- **input.filepath_func**
+  - This variable specifies the list of functional data to be analyzed.
+- **inputinfo.filepath_mask1**
+  - This variable specifies the predictor ROI mask.
+- **inputinfo.filepath_mask2**
+  - This variable specifies the target ROI mask.
+
+inputinfo.roidata_save_dir='path/to/save/roidata/' # output data directory
+inputinfo.results_save_dir='path/to/save/results/' # output model results directory
+inputinfo.save_prediction=False # whether to save predicted timecourses in the target ROI
 
 ### Model Parameters List
 
 NOTICE: Remember to set the value of the parameter manually if you do not want to use the default value.
 
 - General model parameters
-  - **params.mode_class='LR'** 
+  - **params.mode_class** 
     - This parameter determines the general class of MVPD model to be used.
     - The available classes are 'LR' linear regression models and 'NN' neural network models.
     - The default value is 'LR'.
 
-  - **params.leave_k=1**
+  - **params.leave_k**
     - This parameter determines the number of leave out runs in cross-validation.
     - The default value is 1 (leave-one-run-out procedure).
 
