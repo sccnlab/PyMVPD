@@ -13,7 +13,7 @@ Available built-in model components:
 
   Example LR models:
   * [L2_LR](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_L2_LR.py): linear regression model with L2 regularization
-  * PCA_LR: linear regression model with no regularization after principal component analysis (PCA)
+  * [PCA_LR](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_PCA_LR.py): linear regression model with no regularization after principal component analysis (PCA)
 
 2. Neural Network (NN) Models
 Available built-in model components:
@@ -21,9 +21,9 @@ Available built-in model components:
 * NN_dense: fully connected feedforward neural network model with dense connections
 
   Example NN models:
-  * NN_1layer: 1-layer fully-connected linear neural network model
-  * NN_5layer: 5-layer fully-connected linear neural network model
-  * NN_5layer_dense: 5-layer fully-connected linear neural network model with dense connections
+  * [NN_1layer](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_1layer.py): 1-layer fully-connected linear neural network model
+  * [NN_5layer](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer.py): 5-layer fully-connected linear neural network model
+  * [NN_5layer_dense](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer_dense.py): 5-layer fully-connected linear neural network model with dense connections
 
 In addition to these pre-implemented models, you can also customize your own MVPD models by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
 
