@@ -18,6 +18,7 @@ def MVPD_exec(inputinfo, params):
     params - model parameters structure
        params.mode_class - the general class of MVPD model to be used
        params.NN_type - the type of the neural network model to be used
+
     OUTPUT FORMAT
     logfile - xxx_log.txt
     """
