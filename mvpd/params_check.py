@@ -1,10 +1,10 @@
-"""
-Check the validity of model parameters.
-"""
 import sys
 from mvpd.custom_func import dimred_custom, NN_custom
 
 def params_check(params):
+    """
+    Check the validity of model parameters.
+    """
     # check general MVPD model class
     try:
        params.mode_class

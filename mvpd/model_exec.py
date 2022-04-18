@@ -11,7 +11,15 @@ def MVPD_exec(inputinfo, params):
 
     INPUT FORMAT
     inputinfo - model input info structure
+       inputinfo.sub - subject/participant whose data are to be analyzed
+       inputinfo.filepath_func - the list of paths to the directories containing processed functional data
+       inputinfo.results_save_dir - the path to the directory where the results will be saved
+
     params - model parameters structure
+       params.mode_class - the general class of MVPD model to be used
+       params.NN_type - the type of the neural network model to be used
+    OUTPUT FORMAT
+    logfile - xxx_log.txt
     """
     # create output folder if not exists
     if not os.path.exists(inputinfo.results_save_dir):
