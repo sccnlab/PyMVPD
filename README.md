@@ -175,15 +175,6 @@ NOTICE: Remember to set the value of the parameter manually if you do not want t
     - The default array is [0.1, 1.0, 10.0].
 
 - NN model parameters
-  - **params.dim_reduction**: 
-    - This parameter determines whether dimensionality reduction is applied to the input data.
-    - It is only used if you are using a linear regression model by setting params.mode_class='LR'.
-    - The default value is false.
-  - **params.dim_type**: 
-    - This parameter determines the type of the dimensionality reduction.
-    - It is only used if you are using a linear regression model and you set "params.dim_reduction=True".
-    - The available types are 'pca', 'ica', or your custom dimensionality reduction method.
-    - The default type is 'pca'.
   - **params.NN_type**:
     - This parameter determines the type of the neural network model to be used.
     - It is only used if you are using a neural network model by setting params.mode_class='NN'.
