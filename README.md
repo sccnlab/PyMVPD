@@ -6,9 +6,10 @@ PyMVPD is a Python-based toolbox to model the multivariate interactions between 
 
 ## MVPD Model Family
 1. Linear Regression (LR) Models
+
 Available built-in model components:
 * Dimensionality reduction: principal component analysis ([PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)), independent component analysis ([ICA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html))
-* Regularization: [Lasso](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html) (L1), [Ridge](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) (L2), [RidgeCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html) (L2 with build-in cross-validation)
+* Regularization: [Lasso](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html) (L1), [Ridge](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) (L2), [RidgeCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html) (L2 with built-in cross-validation)
 * Cross validation: leave k run out
 
   Example LR models:
@@ -16,6 +17,7 @@ Available built-in model components:
   * [PCA_LR](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_PCA_LR.py): linear regression model with no regularization after principal component analysis (PCA)
 
 2. Neural Network (NN) Models
+
 Available built-in model components:
 * NN_standard: fully connected feedforward neural network model
 * NN_dense: fully connected feedforward neural network model with dense connections
@@ -25,7 +27,7 @@ Available built-in model components:
   * [NN_5layer](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer.py): 5-layer fully-connected linear neural network model
   * [NN_5layer_dense](https://github.com/sccnlab/PyMVPD/tree/main/exp/run_MVPD_NN_5layer_dense.py): 5-layer fully-connected linear neural network model with dense connections
 
-In addition to the above build-in functions, you can also customize your own functions by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
+In addition to the above built-in functions, you can also customize your own functions by adding scripts under [mvpd/custom_func](https://github.com/sccnlab/PyMVPD/tree/main/mvpd/custom_func).
 
 ## Workflow
 <img src="/PyMVPD_workflow.png" width="750"/>
