@@ -171,8 +171,8 @@ def params_check(params):
                    params.reg_strength_list
                 except AttributeError:
                    print("Warning: For RidgeCV, you did not specify the array of regularization strength values to try.")
-                   print("By default: the values [0.1,1.0,10.0] will be tried.\n")
-                   params.reg_strength_list=[0.1,1.0,10.0] 
+                   print("By default: the values [0.001,0.01,0.1] will be tried.\n")
+                   params.reg_strength_list=[0.001,0.01,0.1] 
           except AttributeError:
              print("Warning: you did not specify the regularization method.")
              print("By default: Ridge regression (L2 regularization) will be applied.\n")
