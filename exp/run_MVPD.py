@@ -44,7 +44,7 @@ params.num_dim=3 # number of dimensions after dimensionality reduction, default=
 params.lin_reg=False # False(default)
 params.reg_type='RidgeCV' # ['Ridge'(default), 'Lasso', 'RidgeCV']
 params.reg_strength=0.001 # regularization strength, default=0.001
-params.reg_strength_list=[0.1,1.0,10.0] # RidgeCV: array of reg_strength values to try, default=[0.1,1.0,10.0]
+params.reg_strength_list=[0.001,0.01,0.1] # RidgeCV: array of reg_strength values to try, default=[0.001,0.01,0.1]
 
 ### NN model parameters
 params.NN_type='NN_standard' # ['NN_standard'(default), 'NN_dense']
