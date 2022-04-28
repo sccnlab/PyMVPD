@@ -174,7 +174,7 @@ NOTICE: Remember to set the value of the parameter manually if you do not want t
   - **params.reg_strength_list**
     - This parameter determines the array of regularization strength values to try in the cross-validation for Ridge regression.
     - It is only used if you are using a linear RidgeCV regression model by setting "params.mode_class='LR', params.lin_reg=True, params.reg_type='RidgeCV'".
-    - The default array is [0.1, 1.0, 10.0].
+    - The default array is [0.001, 0.01, 0.1].
 
 - NN model parameters
   - **params.NN_type**:
