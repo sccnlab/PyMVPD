@@ -1,4 +1,4 @@
-# Example script to run MVPD analysis.
+# Example script to run MVPD analysis using the L2_LR model.
 
 import os, sys
 sys.path.append("..")
@@ -33,35 +33,18 @@ inputinfo.save_prediction=False # whether to save the model prediction of the ti
 # MVPD Model Parameters
 params=data_loading.structtype()
 ## general MVPD model class
-params.mode_class='NN' # ['LR'(default), 'NN']
+params.mode_class='LR' # ['LR'(default), 'NN']
 ## cross validation: leave k run out
 params.leave_k=1 # leave one run out(default)
 
 ### LR model parameters
 #### dimensionality reduction
 params.dim_reduction=False # False(default)
-params.dim_type='pca' # ['pca'(default), 'ica']
-params.num_dim=3 # number of dimensions after dimensionality reduction, default=3
 #### regularization 
-params.lin_reg=False # False(default)
-params.reg_type='RidgeCV' # ['Ridge'(default), 'Lasso', 'RidgeCV']
+params.lin_reg=True # False(default)
+params.reg_type='Ridge' # ['Ridge'(default), 'Lasso', 'RidgeCV']
 params.reg_strength=0.001 # regularization strength, default=0.001
-params.reg_strength_list=[0.001,0.01,0.1] # RidgeCV: array of reg_strength values to try, default=[0.001,0.01,0.1]
 
-### NN model parameters
-params.NN_type='NN_standard' # ['NN_standard'(default), 'NN_dense']
-params.input_size=80 # size of predictor ROI
-params.output_size=53539 # size of target ROI
-params.hidden_size=100 # number of units per hidden layer
-params.num_hLayer=5 # number of hidden layers, default=1
-params.num_epochs=5000 # number of epochs for training, default=5000
-params.save_freq=1000 # checkpoint saving frequency, default=num_epochs
-params.print_freq=100 # results printing out frequency, default=100
-params.batch_size=32 # batch size, default=32
-params.learning_rate=1e-3 # SGD optimizer learning rate, default=1e-3
-params.momentum_factor=0.9 # SGD optimizer momentum, default=0.9
-params.w_decay=0 # SGD optimizer weight decay (L2 penalty)
- 
 """
 Step 2 - Data Loading
 """
@@ -71,4 +54,55 @@ data_loading.load_data(inputinfo)
 Step 3 - Analysis Execution
 """
 model_exec.MVPD_exec(inputinfo, params)
+
+
+"""
+Validity test of toolbox
+"""
+import numpy as np
+import nibabel as nib
+
+def img2var(img_path, mask_path):
+    """
+    Extract the numpy array of variance explained in the target ROI from the corresponding brain image.
+    
+    INPUT FORMAT
+    img_path - the path to the directory containing the brain image of variance explained
+    mask_path - the path to the directory conataining the mask of the target ROI
+    
+    OUTPUT FORMAT
+    vari_data - the extracted numpy array of variance explained in the target ROI
+    
+    """
+    img_data = nib.load(img_path).get_fdata()
+    mask_data = nib.load(mask_path).get_fdata()
+    nozero_idx = np.nonzero(mask_data)
+    num_nozero_idx = np.shape(nozero_idx)[1]
+    
+    vari_data = np.zeros(num_nozero_idx)
+    
+    for i in range(num_nozero_idx):
+        x = nozero_idx[0][i]
+        y = nozero_idx[1][i]
+        z = nozero_idx[2][i]
+        vari_data[i] = img_data[x][y][z]
+        
+    return vari_data
+   
+mask_path = './testdata/GM_thr0.1_bin.nii.gz' # path to the mask of target ROI
+tgt_path = './sub-01_L2_LR_var_expl_map_threshold_avgruns.nii.gz' # path to the pre-implemented L2_LR variExpl map
+pred_path = inputinfo.results_save_dir+inputinfo.sub+'_var_expl_map_threshold_avgruns.nii.gz' # path to the obtained L2_LR variExpl map from running the MVPD model
+   
+tgt_vari = img2var(tgt_path, mask_path)
+pred_vari = img2var(pred_path, mask_path)
+
+# Pearson product-moment correlation coefficients
+corr = np.corrcoef(tgt_vari, pred_vari)[0,1]
+
+print("The Pearson correlation between the variance explained of the pre-implemented L2_LR model and your test model is: ", corr)
+
+if corr > 0.95:
+    print("\nThe Pearson correlation is above 0.95. \nYou have passed the validity test!")
+else:
+    print("\nThe Pearson correlation is not above 0.95. \nYou have failed the validity test. Please check the code or toolbox installation before you run formal models.")
 
