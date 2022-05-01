@@ -1,3 +1,5 @@
+# Example script to run MVPD analysis.
+
 import os, sys
 sys.path.append("..")
 from mvpd import data_loading, model_exec
