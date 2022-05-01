@@ -48,8 +48,8 @@ def MVPD_exec(inputinfo, params):
     # logging
     print("inputinfo:", vars(inputinfo))
     print("params:", vars(params))
-    print("log information is saved in "+inputinfo.results_save_dir+inputinfo.sub+"_log.txt")
-    log_filename = inputinfo.results_save_dir+inputinfo.sub+"_log.txt"
+    print("log information is saved in "+inputinfo.results_save_dir+"log.txt")
+    log_filename = inputinfo.results_save_dir+"log.txt"
     log_file = open(log_filename, 'w')
     log_file.write("PyMVPD: version 0.0.3\n")
     log_file.write("input info:\n")
