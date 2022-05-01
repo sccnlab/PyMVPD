@@ -27,7 +27,7 @@ inputinfo.filepath_mask1='./testdata/'+inputinfo.sub+'/'+inputinfo.sub+'_FFA_80v
 inputinfo.filepath_mask2='./testdata/GM_thr0.1_bin.nii.gz'
 ## save settings
 inputinfo.roidata_save_dir='./testdata/'+inputinfo.sub+'_roi_data/'
-inputinfo.results_save_dir='./results/'
+inputinfo.results_save_dir='./testresults/'
 inputinfo.save_prediction=False # whether to save the model prediction of the timecourses in the target ROI, False(default)
 
 # MVPD Model Parameters
@@ -48,7 +48,7 @@ params.reg_strength=0.001 # regularization strength, default=0.001
 """
 Step 2 - Data Loading
 """
-data_loading.load_data(inputinfo)
+#data_loading.load_data(inputinfo)
 
 """
 Step 3 - Analysis Execution

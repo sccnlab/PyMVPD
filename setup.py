@@ -8,7 +8,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="PyMVPD", 
-    version="0.0.3",
+    version="0.0.4",
     author="Mengting Fang",
     author_email="mtfang0707@gmail.com",
     description="A python package for multivariate pattern dependence",
