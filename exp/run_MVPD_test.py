@@ -48,7 +48,7 @@ params.reg_strength=0.001 # regularization strength, default=0.001
 """
 Step 2 - Data Loading
 """
-#data_loading.load_data(inputinfo)
+data_loading.load_data(inputinfo)
 
 """
 Step 3 - Analysis Execution
