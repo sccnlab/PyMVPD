@@ -81,9 +81,9 @@ Step 1 - Analysis Specification
 # Model Input Info
 inputinfo=data_loading.structtype()
 inputinfo.sub='sub-01' # subject whose data are to be analyzed
-filepath_func=[] # input functional Data
-filepath_func+=['path/to/functional/data/run1.nii.gz']
-filepath_func+=['path/to/functional/data/run2.nii.gz']
+inputinfo.filepath_func=[] # input functional Data
+inputinfo.filepath_func+=['path/to/functional/data/run1.nii.gz']
+inputinfo.filepath_func+=['path/to/functional/data/run2.nii.gz']
 ......
 
 inputinfo.filepath_mask1='path/to/predictor/ROI/mask.nii.gz' # predictor ROI mask
