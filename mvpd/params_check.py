@@ -13,7 +13,7 @@ def params_check(params):
           print("By default: MVPD linear regression (LR) model will be used.\n")
           params.mode_class='LR'
        # check neural network (NN) model parameters
-       elif params.mode_class=='NN':
+       if params.mode_class=='NN':
           # check dimensionality reduction
           if params.dim_reduction==True:
              print("Warning: dimensionality reduction is not available for MVPD neural network models.")
