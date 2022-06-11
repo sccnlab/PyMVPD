@@ -15,9 +15,14 @@ def params_check(params):
        # check neural network (NN) model parameters
        if params.mode_class=='NN':
           # check dimensionality reduction
-          if params.dim_reduction==True:
-             print("Warning: dimensionality reduction is not available for MVPD neural network models.")
-             params.dim_reduction=False
+          try:
+             params.dim_reduction
+             if params.dim_reduction==True:
+                print("Warning: dimensionality reduction is not available for MVPD neural network models.")
+                params.dim_reduction=False
+          except AttributeError:
+             pass
+            
           # check NN model parameters
           try:
              params.NN_type
