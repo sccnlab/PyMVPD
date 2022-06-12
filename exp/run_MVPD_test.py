@@ -180,7 +180,7 @@ params.w_decay=0 # SGD optimizer weight decay (L2 penalty)
 """
 Step 2 - Data Loading
 """
-data_loading.load_data(inputinfo)
+#data_loading.load_data(inputinfo)
 
 """
 Step 3 - Analysis Execution
@@ -265,7 +265,7 @@ params.num_hLayer=5 # number of hidden layers, default=1
 """
 Step 2 - Data Loading
 """
-data_loading.load_data(inputinfo)
+#data_loading.load_data(inputinfo)
 
 """
 Step 3 - Analysis Execution
